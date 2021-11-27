@@ -13,7 +13,11 @@
         </div>
       </div>
 
-      <form (ngSubmit)="onSubmit()">
+      <form
+        (ngSubmit)="f.form.valid && onSubmit()"
+        novalidate
+        #f="ngForm"
+      >
         <div class="container">
 
           <h1 class="form-header">Welcome Back</h1>
@@ -21,13 +25,27 @@
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>
             <input
+              email
               required
               type="email"
               name="email"
               matInput
               placeholder="Email"
               [(ngModel)]="form.email"
+              #email="ngModel"
             />
+            <mat-hint
+              *ngIf="f.submitted && email.errors && email.errors.required"
+              class="text-danger"
+            >
+              Email is required
+            </mat-hint>
+            <mat-hint
+              *ngIf="f.submitted && email.errors && email.errors.email"
+              class="text-danger"
+            >
+              Email must be a valid email address
+            </mat-hint>
           </mat-form-field>
 
           <mat-form-field class="full-width" appearance="outline">
@@ -39,7 +57,14 @@
               matInput
               placeholder="Password"
               [(ngModel)]="form.password"
+              #password="ngModel"
             />
+            <mat-hint
+              *ngIf="f.submitted && password.errors && password.errors.required "
+              class="text-danger"
+            >
+              Password is required
+            </mat-hint>
           </mat-form-field>
 
         </div>

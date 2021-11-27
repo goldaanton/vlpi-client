@@ -27,12 +27,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  ngOnDestroy(): void {
-    if (this.signupSubscription) {
-      this.signupSubscription.unsubscribe()
-    }
-  }
-
   onSubmit() {
     this.signupSubscription = this.userService.addUser(this.user).subscribe(
       (data) => {
@@ -41,6 +35,12 @@ export class SignupComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.signupSubscription) {
+      this.signupSubscription.unsubscribe()
+    }
   }
 
 }
