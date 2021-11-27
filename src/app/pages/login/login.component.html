@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-3">
+
+      <div class="container mt-5 mb-5">
+        <div class="row align-items-center">
+          <div class="col-5">
+            <img src="../../../assets/vlpi-logo.svg" alt="VLPI logo">
+          </div>
+          <div class="col">
+            <h1 class="logo-header">VLPI</h1>
+          </div>
+        </div>
+      </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="container">
+
+          <h1 class="form-header">Welcome Back</h1>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              required
+              type="email"
+              name="email"
+              matInput
+              placeholder="Email"
+              [(ngModel)]="form.email"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              required
+              type="password"
+              name="password"
+              matInput
+              placeholder="Password"
+              [(ngModel)]="form.password"
+            />
+          </mat-form-field>
+
+        </div>
+
+        <div class="container">
+          <button type="submit" mat-flat-button class="full-width button-primary">Log in</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
