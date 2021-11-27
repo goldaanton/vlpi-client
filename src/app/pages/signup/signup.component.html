@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <form>
+      <form (ngSubmit)="onSubmit()">
         <div class="container">
 
           <h1 class="form-header">Create Account</h1>
@@ -23,14 +23,24 @@
             <div class="col">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>First Name</mat-label>
-                <input matInput placeholder="First Name">
+                <input
+                  name="firstName"
+                  matInput
+                  placeholder="First Name"
+                  [(ngModel)]="user.firstName"
+                />
               </mat-form-field>
             </div>
 
             <div class="col">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Last name</mat-label>
-                <input matInput placeholder="Last Name">
+                <input
+                  name="lastName"
+                  matInput
+                  placeholder="Last Name"
+                  [(ngModel)]="user.lastName"
+                />
               </mat-form-field>
             </div>
 
@@ -38,23 +48,41 @@
 
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>
-            <input type="email" matInput placeholder="Email">
+            <input
+              type="email"
+              name="email"
+              matInput
+              placeholder="Email"
+              [(ngModel)]="user.email"
+            />
           </mat-form-field>
 
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
-            <input type="password" matInput placeholder="Password">
+            <input
+              type="password"
+              name="password"
+              matInput
+              placeholder="Password"
+              [(ngModel)]="user.password"
+            />
           </mat-form-field>
 
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password Confirmation</mat-label>
-            <input type="password" matInput placeholder="Password Confirmation">
+            <input
+              type="password"
+              name="passwordConfirmation"
+              matInput
+              placeholder="Password Confirmation"
+              [(ngModel)]="user.passwordConfirmation"
+            />
           </mat-form-field>
 
         </div>
 
-        <div class="container text-center">
-          <button mat-flat-button class="full-width button-primary">Sign up</button>
+        <div class="container">
+          <button type="submit" mat-flat-button class="full-width button-primary">Sign up</button>
         </div>
 
       </form>
