@@ -8,18 +8,18 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class NavbarComponent implements OnInit {
 
+  isUserLoggedIn: boolean = false;
+
   constructor(
     private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
-  }
-
-  public isUserLoggedIn(): boolean {
-    return this.loginService.isLoggedIn();
+    this.isUserLoggedIn = this.loginService.isLoggedIn();
   }
 
   public logOut(): void {
+    this.isUserLoggedIn = false;
     this.loginService.logOut();
     window.location.reload();
   }

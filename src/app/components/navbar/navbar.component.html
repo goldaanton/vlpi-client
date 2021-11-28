@@ -9,7 +9,7 @@
 
     <span class="spacer"></span>
 
-    <div *ngIf="!isUserLoggedIn()">
+    <div *ngIf="!isUserLoggedIn">
       <a mat-icon-button [routerLink]="'/login'" class="mr-10">
         Login
       </a>
@@ -19,7 +19,7 @@
       </a>
     </div>
 
-    <div *ngIf="isUserLoggedIn()">
+    <div *ngIf="isUserLoggedIn">
       <a mat-icon-button (click)="logOut()" class="mr-10">
         Logout
       </a>
