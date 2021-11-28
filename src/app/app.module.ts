@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { authInterceptorProviders } from './interceptors/auth.interceptor';
 
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -34,7 +35,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatToolbarModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    authInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

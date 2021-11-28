@@ -31,6 +31,10 @@ export class LoginService {
     )
   }
 
+  public getCurrentUser(): Observable<any> {
+    return this.http.get(`${env.apiHostUrl}/api/current_user`);
+  }
+
   public loginUser(token: string): void {
     localStorage.setItem('token', token);
   }
@@ -54,11 +58,11 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  public setUser(user: User) {
+  public setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public getUser(): User | null {
+  public getUser() {
     let user = localStorage.getItem('user');
 
     if (user != null) {
@@ -67,6 +71,10 @@ export class LoginService {
       this.logOut();
       return null;
     }
+  }
+
+  public getUserRole(): string {
+    return this.getUser().role;
   }
 
 }
