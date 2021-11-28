@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { User } from '../models';
 
@@ -16,7 +17,7 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  public addUser(user: User) {
+  public addUser(user: User): Observable<any> {
     const username = user.email;
     const email = user.email;
     const password = user.password;

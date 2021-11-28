@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,7 +38,8 @@ import { ModulesComponent } from './pages/modules/modules.component';
     FormsModule,
     MatToolbarModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   providers: [
     authInterceptorProviders
