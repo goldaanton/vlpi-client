@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
           }
         );
+
+        this.router.navigate(['']);
       }, (err) => {
         console.log(err);
       }

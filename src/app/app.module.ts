@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,13 +17,15 @@ import { authInterceptorProviders } from './interceptors/auth.interceptor';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ModulesComponent } from './pages/modules/modules.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    ModulesComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatButtonModule,
     FormsModule,
     MatToolbarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
   ],
   providers: [
     authInterceptorProviders

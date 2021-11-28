@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models';
 import { UserService } from 'src/app/services/user.service';
@@ -21,7 +22,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.signupSubscription = this.userService.addUser(this.user).subscribe(
       (data) => {
         console.log(data);
+        this.router.navigate(['login']);
       }, (err) => {
         console.log(err);
       }

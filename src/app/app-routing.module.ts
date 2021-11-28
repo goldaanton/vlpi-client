@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ModulesComponent } from './pages/modules/modules.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: ModulesComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
   {
     path: 'signup',
     component: SignupComponent,

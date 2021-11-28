@@ -2,7 +2,6 @@
   <mat-toolbar class="toolbar-primary">
 
     <a mat-icon-button routerLink="/">
-      <i class="fab fa-cloudsmith" aria-hidden="true"></i>
       <img src="../../../assets/cloudsmith.svg" alt="VLPI logo">
     </a>
 
@@ -10,13 +9,24 @@
 
     <span class="spacer"></span>
 
-    <a mat-icon-button [routerLink]="'/login'" class="mr-10">
-      Login
-    </a>
+    <div *ngIf="!isUserLoggedIn()">
+      <a mat-icon-button [routerLink]="'/login'" class="mr-10">
+        Login
+      </a>
 
-    <a mat-icon-button [routerLink]="'/signup'" class="mr-10">
-      Signup
-    </a>
+      <a mat-icon-button [routerLink]="'/signup'" class="mr-10">
+        Signup
+      </a>
+    </div>
+
+    <div *ngIf="isUserLoggedIn()">
+      <a mat-icon-button (click)="logOut()" class="mr-10">
+        Logout
+      </a>
+      <a mat-icon-button [routerLink]="'/profile'" class="mr-10">
+        <mat-icon class="profile-icon">account_circle</mat-icon>
+      </a>
+    </div>
 
   </mat-toolbar>
 </p>
