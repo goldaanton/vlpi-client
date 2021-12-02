@@ -4,6 +4,7 @@ import { AuthGuard } from './guards/auth.guard';
 
 import { LoginComponent } from './pages/login/login.component';
 import { ModulesComponent } from './pages/modules/modules.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
 const routes: Routes = [
@@ -22,6 +23,12 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   }
 ];
 
