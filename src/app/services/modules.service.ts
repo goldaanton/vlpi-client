@@ -153,9 +153,24 @@ export class ModulesService {
       },
       {
         id: 5,
-        question: 'Question 5',
+        question: 'Question 5 Question 5 Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5 Question 5 Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5',
         score: 5,
         solution_blocks: [
+          {
+            text: 'abcdefg',
+            display_order: 5,
+            solution_order: 5
+          },
+          {
+            text: 'abcdefg',
+            display_order: 5,
+            solution_order: 5
+          },
+          {
+            text: 'abcdefg',
+            display_order: 5,
+            solution_order: 5
+          },
           {
             text: 'abcdefg',
             display_order: 5,

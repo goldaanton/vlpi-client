@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ModulesComponent } from './pages/modules/modules.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,11 @@ const routes: Routes = [
   {
     path: 'modules/:id',
     component: ExercisesComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'modules/:module_id/exercises/:id',
+    component: TasksComponent,
     pathMatch: 'full'
   }
 ];

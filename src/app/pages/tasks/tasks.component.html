@@ -1,0 +1,78 @@
+<div class="container-fluid">
+
+  <div class="row align-items-center">
+    <div class="col-1 align-right">
+      <a mat-icon-button [routerLink]="'../../'">
+        <mat-icon class="back-icon">arrow_back</mat-icon>
+      </a>
+    </div>
+
+    <div class="col-3 headers-col">
+      <h1 class="page-header">Tasks</h1>
+    </div>
+  </div>
+
+  <div class="row m-5">
+
+    <div class="col-2">
+      <div class="container section no-paddings">
+        <div
+          *ngFor="let task of tasks; let i = index"
+          class="tasks-list"
+        >
+          <p
+            (click)="setTask(task.id)"
+            [ngClass]="{ 'task-active': task.id == activeTaskId }"
+          >
+            Task {{ i + 1 }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-10">
+      <div class="container-fluid section no-paddings pt-3 pb-3">
+
+        <div class="container-fluid">
+          <h1 class="section-header" >Task Definition</h1>
+          <p class="task-question section">{{ task.question }}</p>
+        </div>
+
+        <div class="container-fluid">
+          <div class="blocks-container">
+            <h2>Answer Blocks</h2>
+
+            <div
+              cdkDropList
+              #answerBlocksList="cdkDropList"
+              [cdkDropListData]="answerBlocks"
+              [cdkDropListConnectedTo]="[userAnswerList]"
+              class="blocks-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="blocks-box" *ngFor="let block of answerBlocks" cdkDrag>{{ block }}</div>
+            </div>
+          </div>
+
+          <div class="blocks-container">
+            <h2>Your Answer</h2>
+
+            <div
+              cdkDropList
+              #userAnswerList="cdkDropList"
+              [cdkDropListData]="userAnswerBlocks"
+              [cdkDropListConnectedTo]="[answerBlocksList]"
+              class="blocks-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="blocks-box" *ngFor="let block of userAnswerBlocks" cdkDrag>{{ block }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          <button mat-flat-button class="button-primary" (click)="checkAnswer(userAnswerList.data)">Submit</button>
+        </div>
+
+        </div>
+      </div>
+  </div>
+</div>

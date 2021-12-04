@@ -1,0 +1,112 @@
+.section {
+  border: #CED4DA solid 1px;
+  border-radius: 4px;
+  min-height: 100%;
+}
+
+.back-icon {
+  color: #64B986;
+  font-size: 40px;
+}
+
+.tasks-list {
+  list-style-type: none;
+
+  p {
+    font-size: 20px;
+    border-bottom: #CED4DA solid 1px;
+    margin: 0px;
+    padding: 15px 0 15px 30px;
+  }
+}
+
+.page-header {
+  font-size: 36px;
+  font-weight: 450;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.button-primary {
+  background-color: #64B986;
+  color: #F8F9FA;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 150;
+}
+
+.section-header {
+  font-size: 20px;
+  font-weight: 550;
+}
+
+.no-paddings {
+  padding: 0px;
+}
+
+.task-active {
+  color: #64B986
+}
+
+.task-question {
+  padding: 10px;
+}
+
+// copied for drag and drop lists
+
+.blocks-container {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.blocks-list {
+  border: solid 1px #ccc;
+  min-height: 60px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.blocks-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.blocks-box:last-child {
+  border: none;
+}
+
+.blocks-list.cdk-drop-list-dragging .blocks-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
