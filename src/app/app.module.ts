@@ -25,6 +25,7 @@ import { ModulesComponent } from './pages/modules/modules.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TasksComponent } from './pages/tasks/tasks.component';
     ModulesComponent,
     ProfileComponent,
     ExercisesComponent,
-    TasksComponent
+    TasksComponent,
+    AdminExercisesComponent
   ],
   imports: [
     BrowserModule,

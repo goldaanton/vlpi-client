@@ -1,16 +1,16 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { ModulesService } from 'src/app/services/modules.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/models';
+import { ModulesService } from 'src/app/services/modules.service';
 
 @Component({
-  selector: 'app-exercises',
-  templateUrl: './exercises.component.html',
-  styleUrls: ['./exercises.component.scss']
+  selector: 'app-admin-exercises',
+  templateUrl: './admin-exercises.component.html',
+  styleUrls: ['./admin-exercises.component.scss']
 })
-export class ExercisesComponent implements OnInit, AfterViewInit {
+export class AdminExercisesComponent implements OnInit {
 
   public id!: string | null;
   public exercises!: any;

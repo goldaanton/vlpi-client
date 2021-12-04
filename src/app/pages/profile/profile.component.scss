@@ -1,5 +1,5 @@
 .button-primary {
-  background-color: #64B986;
+  background-color: var(--primary-green);
   color: #F8F9FA;
   height: 40px;
   font-size: 18px;
@@ -28,7 +28,7 @@ p {
 }
 
 .back-icon {
-  color: #64B986;
+  color: var(--primary-green);
   font-size: 40px;
 }
 

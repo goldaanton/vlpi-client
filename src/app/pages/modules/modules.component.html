@@ -6,9 +6,21 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" *ngIf="!admin">
     <div class="row justify-content-center mt-5">
       <div *ngFor="let module of modules" class="col-2" [routerLink]="['modules', module.id]">
+        <mat-card class="card">
+          <img class="max-width" src='../../../assets/{{ module.name }}.jpg'>
+          <mat-card-title class="mt-3">{{ module.name }}</mat-card-title>
+          <mat-card-content>{{ module.description }}</mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" *ngIf="admin">
+    <div class="row justify-content-center mt-5">
+      <div *ngFor="let module of modules" class="col-2" [routerLink]="['admin-modules', module.id]">
         <mat-card class="card">
           <img class="max-width" src='../../../assets/{{ module.name }}.jpg'>
           <mat-card-title class="mt-3">{{ module.name }}</mat-card-title>

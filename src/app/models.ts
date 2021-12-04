@@ -5,3 +5,7 @@ export interface User {
   password: string;
   passwordConfirmation: string;
 }
+
+export interface Exercise {
+  name: string;
+}
