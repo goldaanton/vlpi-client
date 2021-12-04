@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +22,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModulesComponent } from './pages/modules/modules.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ExercisesComponent } from './pages/exercises/exercises.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
     LoginComponent,
     NavbarComponent,
     ModulesComponent,
-    ProfileComponent
+    ProfileComponent,
+    ExercisesComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
     MatToolbarModule,
     HttpClientModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [
     authInterceptorProviders
