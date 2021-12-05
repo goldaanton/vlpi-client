@@ -1,0 +1,36 @@
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.text-content {
+  font-size: 18px;
+}
+
+.button-yes {
+  background-color: var(--primary-green);
+  color: var(--primary-white);
+  height: 40px;
+  font-size: 18px;
+  font-weight: 150;
+  margin-right: 3px;
+}
+
+.button-no {
+  background-color: var(--primary-white);
+  color: var(--primary-green);
+  height: 40px;
+  font-size: 18px;
+  font-weight: 150;
+  margin-left: 3px;
+}
+
+.close-icon {
+  font-size: 36px;
+  color: var(--primary-green);
+  min-height: 100%;
+  min-width: 100%;
+}

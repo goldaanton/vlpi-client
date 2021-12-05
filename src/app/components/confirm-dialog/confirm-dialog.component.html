@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col align-right">
+      <button
+        mat-icon-button
+        (click)="closeDialog()"
+        tabIndex="-1"
+      >
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="row mg-3">
+    <div class="col align-center">
+      <p class="text-content">
+        {{ message }}
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col align-center">
+      <button
+          mat-flat-button
+          class="button-yes"
+          [mat-dialog-close]="true"
+        >
+          Yes
+        </button>
+
+        <button
+          mat-stroked-button
+          class="button-no"
+          [mat-dialog-close]="false"
+        >
+          No
+        </button>
+    </div>
+  </div>
+</div>
