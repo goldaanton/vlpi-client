@@ -11,6 +11,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
+import { AdminTasksComponent } from './pages/admin-tasks/admin-tasks.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,12 @@ const routes: Routes = [
     component: TasksComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin-modules/:module_id/admin-exercises/:id',
+    component: AdminTasksComponent,
+    pathMatch: 'full',
+    canActivate: [AdminGuard]
   }
 ];
 

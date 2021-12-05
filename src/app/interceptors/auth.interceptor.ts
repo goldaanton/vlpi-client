@@ -1,6 +1,7 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
+import { tap } from 'rxjs/operators';
 import { LoginService } from "../services/login.service";
 
 const TOKEN_HEADER = 'Authorization';
@@ -22,7 +23,14 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(authReq);
+    return next.handle(authReq).pipe(tap(() => {},
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status == 401) {
+            this.loginService.logOut();
+          }
+        }
+      }));
   }
 
 }
