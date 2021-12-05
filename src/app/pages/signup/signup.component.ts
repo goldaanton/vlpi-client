@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models';
-import { UserService } from 'src/app/services/user.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +23,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private userService: UserService,
+    private snackBar: MatSnackBar,
+    private loginService: LoginService,
     private router: Router
   ) { }
 
@@ -30,12 +32,17 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.signupSubscription = this.userService.addUser(this.user).subscribe(
+    this.signupSubscription = this.loginService.register(this.user).subscribe(
       (data) => {
         console.log(data);
+
         this.router.navigate(['login']);
       }, (err) => {
         console.log(err);
+
+        this.snackBar.open('Email is already in use', '', {
+          duration: 3000
+        });
       }
     )
   }

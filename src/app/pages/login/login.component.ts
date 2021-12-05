@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
@@ -10,9 +11,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  private loginSubscription: Subscription | undefined;
-  private getCuurentUserSubscription: Subscription | undefined;
-
+  private loginSubscription!: Subscription;
 
   public loginData = {
     email: '',
@@ -21,7 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -34,30 +34,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.loginService.loginUser(data.accessToken);
 
-        // TODO: handle setting user
-        this.getCuurentUserSubscription = this.loginService.getCurrentUser().subscribe(
-          (user: any) => {
-            this.loginService.setUser(user);
-          }, (err) => {
-            console.log(err);
-            this.loginService.setUser({
-              email: 'john_doe@hello.com',
-              firstName: 'John',
-              lastName: 'Doe'
-            });
-          }
-        );
+        this.router.navigate(['']).then(() => {
+          window.location.reload();
+        });
 
-        this.router.navigate(['']);
       }, (err) => {
         console.log(err);
+
+        this.snackBar.open('Your credentials are invalid', '', {
+          duration: 3000
+        });
       }
     )
   }
 
   ngOnDestroy(): void {
     this.loginSubscription?.unsubscribe();
-    this.getCuurentUserSubscription?.unsubscribe();
   }
 
 }

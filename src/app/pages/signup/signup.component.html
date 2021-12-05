@@ -128,6 +128,12 @@
             >
               Confirm your password
             </mat-hint>
+            <mat-hint
+              *ngIf="f.submitted && password != passwordConfirmation"
+              class="text-danger"
+            >
+              Passwords do not match
+            </mat-hint>
           </mat-form-field>
 
         </div>

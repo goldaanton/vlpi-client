@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { User } from '../models';
+import jwt_decode from 'jwt-decode';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,12 +18,30 @@ export class LoginService {
     private http: HttpClient
   ) { }
 
+  public register(user: User): Observable<any> {
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    const username = user.email;
+    const password = user.password;
+
+    return this.http.post(
+      `${env.apiHostUrl}/authentication/registration`,
+      {
+        firstName,
+        lastName,
+        username,
+        password
+      },
+      httpOptions
+    );
+  }
+
   public generateToken(loginData: any): Observable<any> {
     const username = loginData.email;
     const password = loginData.password;
 
     return this.http.post(
-      `${env.apiHostUrl}/api/auth/signin`,
+      `${env.apiHostUrl}/authentication`,
       {
         username,
         password
@@ -31,12 +50,16 @@ export class LoginService {
     )
   }
 
-  public getCurrentUser(): Observable<any> {
-    return this.http.get(`${env.apiHostUrl}/api/current_user`);
-  }
-
   public loginUser(token: string): void {
+    let parsedToken = this.parseToken(token);
+    let role = parsedToken.authorities.includes('ROLE_ADMINISTRATOR') ? 'admin' : 'student';
+    let user = JSON.stringify({
+      username: parsedToken.sub,
+      role: role
+    });
+
     localStorage.setItem('token', token);
+    localStorage.setItem('user', user);
   }
 
   public isLoggedIn(): boolean {
@@ -58,10 +81,6 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  public setUser(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
   public getUser() {
     let user = localStorage.getItem('user');
 
@@ -75,6 +94,10 @@ export class LoginService {
 
   public getUserRole(): string {
     return this.getUser().role;
+  }
+
+  private parseToken(token: string): any {
+    return jwt_decode(token);
   }
 
 }
