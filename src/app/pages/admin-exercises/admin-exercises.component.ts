@@ -15,9 +15,9 @@ export class AdminExercisesComponent implements OnInit {
   public id!: string | null;
   public exercises!: any;
   public dataSource!: MatTableDataSource<Exercise>;
-  public displayedColumns: string[] = ['name'];
+  public displayedColumns: string[] = ['name', 'delete'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator | null;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,13 +28,17 @@ export class AdminExercisesComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       this.exercises = this.modulesService.getExercises(this.id);
-      console.log(this.exercises);
       this.dataSource = new MatTableDataSource<Exercise>(this.exercises)
     })
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  deleteExercise(exercise: any) {
+    alert(`Exercise with id ${exercise.id} was deleted`);
+    console.log(exercise);
   }
 
 }

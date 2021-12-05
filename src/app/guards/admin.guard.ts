@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 
@@ -10,6 +10,7 @@ export class AdminGuard implements CanActivate {
 
   constructor(
     private loginService: LoginService,
+    private router: Router
   ) { }
 
   canActivate(
@@ -20,6 +21,8 @@ export class AdminGuard implements CanActivate {
         return true;
       }
 
+      let module_id = route.paramMap.get('id');
+      this.router.navigate([`modules/${module_id}`]);
       return false;
   }
 
