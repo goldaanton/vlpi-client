@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { ExerciseComponent } from 'src/app/components/exercise/exercise.component';
 import { Exercise } from 'src/app/models';
 import { ModulesService } from 'src/app/services/modules.service';
 
@@ -21,7 +23,8 @@ export class AdminExercisesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private modulesService: ModulesService
+    private modulesService: ModulesService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +39,17 @@ export class AdminExercisesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  deleteExercise(exercise: any) {
-    alert(`Exercise with id ${exercise.id} was deleted`);
-    console.log(exercise);
+  onCreate() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    this.dialog.open(ExerciseComponent, dialogConfig);
+  }
+
+  onDelete(exercise_id: string) {
+    if(confirm(`Are you sure you want to delete Exrixise with id ${exercise_id}`)) {
+      alert(`Exercise with id ${exercise_id} was deleted`);
+    }
   }
 
 }

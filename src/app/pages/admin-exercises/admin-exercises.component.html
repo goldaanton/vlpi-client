@@ -17,7 +17,13 @@
   <div class="row mt-3">
     <div class="col">
       <div class="container button-container">
-        <button mat-flat-button class="button-add">+ Add Exercise</button>
+        <button
+          mat-flat-button
+          class="button-add"
+          (click)="onCreate()"
+        >
+          + Add Exercise
+        </button>
       </div>
     </div>
   </div>
@@ -45,7 +51,7 @@
               <td mat-cell *matCellDef="let element">
                 <button
                   mat-icon-button
-                  (click)="deleteExercise(element)"
+                  (click)="onDelete(element.id)"
                 >
                   <mat-icon class="icon-delete">delete_outline</mat-icon>
                 </button>

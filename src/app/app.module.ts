@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises.component';
+import { ExerciseComponent } from './components/exercise/exercise.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises
     ProfileComponent,
     ExercisesComponent,
     TasksComponent,
-    AdminExercisesComponent
+    AdminExercisesComponent,
+    ExerciseComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,9 @@ import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises
     MatCardModule,
     MatPaginatorModule,
     MatTableModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [
     authInterceptorProviders

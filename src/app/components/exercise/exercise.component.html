@@ -1,0 +1,72 @@
+<mat-toolbar class="toolbar">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-10">
+        <h1 class="header">Create New Exercise</h1>
+      </div>
+
+      <div class="col-2 align-right">
+        <button
+          mat-icon-button
+          (click)="onClose()"
+          tabIndex="-1"
+        >
+          <mat-icon class="close-icon">clear</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</mat-toolbar>
+
+<form
+  [formGroup]="form"
+  (submit)="onSubmit()"
+>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="form-control">
+          <input formControlName="name" matInput placeholder="Name">
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="form-control">
+          <textarea rows="5" formControlName="description" matInput placeholder="Description"></textarea>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col center">
+
+        <button
+          mat-flat-button
+          type="submit"
+          [disabled]="form.invalid"
+          class="button-create"
+        >
+          Create
+        </button>
+
+        <button
+          mat-stroked-button
+          class="button-reset"
+          (click)="onReset()"
+        >
+          Reset
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</form>

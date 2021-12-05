@@ -1,0 +1,45 @@
+.form-control {
+  min-width: 700px;
+}
+
+.button-create {
+  background-color: var(--primary-green);
+  color: var(--primary-white);
+  height: 40px;
+  font-size: 18px;
+  font-weight: 150;
+  margin-right: 3px;
+}
+
+.button-reset {
+  background-color: var(--primary-white);
+  color: var(--primary-green);
+  height: 40px;
+  font-size: 18px;
+  font-weight: 150;
+  margin-left: 3px;
+}
+
+.close-icon {
+  font-size: 36px;
+  color: var(--primary-green);
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.header {
+  color: var(--primary-green);
+  font-size: 26px;
+}
+
+.center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.toolbar {
+  background-color: transparent;
+}
