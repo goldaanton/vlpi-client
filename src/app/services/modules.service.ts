@@ -12,38 +12,10 @@ export class ModulesService {
     private http: HttpClient
   ) { }
 
-  public getModules() {
-    // return this.http.get(
-    //   `${env.apiHostUrl}/api/modules`
-    // )
-
-    return [
-      {
-        id: 1,
-        name: 'Requirement Analysis',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus'
-      },
-      {
-        id: 2,
-        name: 'Design',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 3,
-        name: 'Modeling',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 4,
-        name: 'Implementation',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 5,
-        name: 'Quality Assurance',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      }
-    ]
+  public getModules(): Observable<any> {
+    return this.http.get(
+      `${env.apiHostUrl}/module/all`
+    )
   }
 
   public getExercises(moduleId: any): any {

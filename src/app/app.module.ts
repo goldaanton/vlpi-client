@@ -31,7 +31,6 @@ import { AdminExercisesComponent } from './pages/admin-exercises/admin-exercises
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { AdminTasksComponent } from './pages/admin-tasks/admin-tasks.component';
-import { TaskComponent } from './components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +45,7 @@ import { TaskComponent } from './components/task/task.component';
     AdminExercisesComponent,
     ExerciseComponent,
     ConfirmDialogComponent,
-    AdminTasksComponent,
-    TaskComponent
+    AdminTasksComponent
   ],
   imports: [
     BrowserModule,
