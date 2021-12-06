@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
+import { Observable } from "rxjs";
 import { tap } from 'rxjs/operators';
 import { LoginService } from "../services/login.service";
 
@@ -26,8 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(tap(() => {},
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status == 401) {
+          if (err.status == 401 || err.status == 403) {
             this.loginService.logOut();
+            window.location.reload();
           }
         }
       }));
