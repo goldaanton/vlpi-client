@@ -55,7 +55,8 @@ export class LoginService {
     let role = parsedToken.authorities.includes('ROLE_ADMINISTRATOR') ? 'admin' : 'student';
     let user = JSON.stringify({
       username: parsedToken.sub,
-      role: role
+      role: role,
+      name: 'Anton Golda'
     });
 
     localStorage.setItem('token', token);

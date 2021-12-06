@@ -29,11 +29,11 @@
     </div>
 
     <div *ngIf="isUserLoggedIn">
-      <a mat-icon-button (click)="logOut()" class="mr-10">
+      <a mat-icon-button (click)="logOut()" class="mr-20">
         Logout
       </a>
       <a mat-icon-button [routerLink]="'/profile'" class="mr-10">
-        <mat-icon class="profile-icon">account_circle</mat-icon>
+        <ngx-avatar name="{{ userName }}" size="35" bgColor="#64B986"></ngx-avatar>
       </a>
     </div>
 

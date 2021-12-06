@@ -15,16 +15,18 @@
   </div>
 
   <div class="row">
-    <div class="col-2 offset-5 text-center">
-      <div class="container-fluid">
-        <img src="../../../assets/titka.svg" class="profile-image" alt="Profile Image">
-      </div>
+    <div class="col d-flex justify-content-center">
+        <ngx-avatar name="{{ userName }}" size="250" bgColor="#64B986"></ngx-avatar>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col-2 offset-5 text-center">
       <div class="container-fluid mt-4">
         <button
           mat-button
           class="full-width button-primary"
-          [routerLink]="'/profile'"
+          (click)="onEditClick()"
         >
           Edit Profile
         </button>
