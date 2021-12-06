@@ -18,59 +18,10 @@ export class ModulesService {
     )
   }
 
-  public getExercises(moduleId: any): any {
-    return [
-      {
-        id: 1,
-        name: 'Exercise 1',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus'
-      },
-      {
-        id: 2,
-        name: 'Exercise 2',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 3,
-        name: 'Exercise 3',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 4,
-        name: 'Exercise 4',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 5,
-        name: 'Exercise 5',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 6,
-        name: 'Exercise 6',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus'
-      },
-      {
-        id: 7,
-        name: 'Exercise 7',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 8,
-        name: 'Exercise 8',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 9,
-        name: 'Exercise 9',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      },
-      {
-        id: 10,
-        name: 'Exercise 10',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat sunt ducimus eveniet aut. Ipsa, voluptatibus tempora omnis assumenda dignissimos est asperiores fugiat, laboriosam beatae adipisci temporibus. Quam numquam sint explicabo.'
-      }
-    ]
+  public getExercises(moduleId: string): Observable<any> {
+    return this.http.get(
+      `${env.apiHostUrl}/exercise/all?moduleId=${moduleId}`
+    );
   }
 
   public getTasks(exerciseId: any): any {

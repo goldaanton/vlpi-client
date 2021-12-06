@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ExerciseComponent } from 'src/app/components/exercise/exercise.component';
 import { DialogService } from 'src/app/dialog.service';
 import { Exercise } from 'src/app/models';
@@ -13,12 +15,14 @@ import { ModulesService } from 'src/app/services/modules.service';
   templateUrl: './admin-exercises.component.html',
   styleUrls: ['./admin-exercises.component.scss']
 })
-export class AdminExercisesComponent implements OnInit {
+export class AdminExercisesComponent implements OnInit, OnDestroy {
 
-  public id!: string | null;
+  public id!: string;
   public exercises!: any;
   public dataSource!: MatTableDataSource<Exercise>;
   public displayedColumns: string[] = ['name', 'delete'];
+
+  private modulesSubscription!: Subscription;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -26,19 +30,26 @@ export class AdminExercisesComponent implements OnInit {
     private route: ActivatedRoute,
     private modulesService: ModulesService,
     private dialog: MatDialog,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id');
-      this.exercises = this.modulesService.getExercises(this.id);
-      this.dataSource = new MatTableDataSource<Exercise>(this.exercises)
-    })
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+      this.id = params.get('id') || '5';
+      this.modulesSubscription = this.modulesService.getExercises(this.id).subscribe(
+        (data) => {
+          this.exercises = data;
+          this.dataSource = new MatTableDataSource<Exercise>(this.exercises);
+          this.dataSource.paginator = this.paginator;
+        }, (err) => {
+          console.log(err);
+          this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+            duration: 5000
+          });
+        }
+      );
+    });
   }
 
   onCreate() {
@@ -55,6 +66,10 @@ export class AdminExercisesComponent implements OnInit {
           alert(`Exercise with id ${exercise_id} was deleted`);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.modulesSubscription?.unsubscribe();
   }
 
 }
