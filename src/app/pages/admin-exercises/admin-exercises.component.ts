@@ -17,12 +17,13 @@ import { ModulesService } from 'src/app/services/modules.service';
 })
 export class AdminExercisesComponent implements OnInit, OnDestroy {
 
-  public id!: string;
+  public moduleId!: string;
   public exercises!: any;
   public dataSource!: MatTableDataSource<Exercise>;
   public displayedColumns: string[] = ['name', 'delete'];
 
   private modulesSubscription!: Subscription;
+  private modalSubscription!: Subscription;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -36,27 +37,25 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id') || '5';
-      this.modulesSubscription = this.modulesService.getExercises(this.id).subscribe(
-        (data) => {
-          this.exercises = data;
-          this.dataSource = new MatTableDataSource<Exercise>(this.exercises);
-          this.dataSource.paginator = this.paginator;
-        }, (err) => {
-          console.log(err);
-          this.snackBar.open('Something went wrong. Look in the console for details.', '', {
-            duration: 5000
-          });
-        }
-      );
+      this.moduleId = params.get('id') || '5';
+      this.fetchExercises();
     });
   }
 
   onCreate() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    this.dialog.open(ExerciseComponent, dialogConfig);
+    let dialogRef = this.dialog.open(ExerciseComponent, {
+      autoFocus: true,
+      disableClose: true,
+      data: {
+        moduleId: this.moduleId
+      }
+    });
+
+    this.modalSubscription = dialogRef.afterClosed().subscribe(
+      (data) => {
+        this.fetchExercises();
+      }
+    );
   }
 
   onDelete(exercise_id: string) {
@@ -70,6 +69,22 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.modulesSubscription?.unsubscribe();
+    this.modalSubscription?.unsubscribe();
+  }
+
+  private fetchExercises() {
+    this.modulesSubscription = this.modulesService.getExercises(this.moduleId).subscribe(
+      (data) => {
+        this.exercises = data;
+        this.dataSource = new MatTableDataSource<Exercise>(this.exercises);
+        this.dataSource.paginator = this.paginator;
+      }, (err) => {
+        console.log(err);
+        this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+          duration: 5000
+        });
+      }
+    );
   }
 
 }

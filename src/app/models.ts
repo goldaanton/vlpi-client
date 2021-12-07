@@ -8,4 +8,6 @@ export interface User {
 
 export interface Exercise {
   name: string;
+  description: string;
+  moduleId: number;
 }

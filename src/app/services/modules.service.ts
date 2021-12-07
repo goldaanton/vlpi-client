@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
+import { Exercise } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,21 @@ export class ModulesService {
   public getExercises(moduleId: string): Observable<any> {
     return this.http.get(
       `${env.apiHostUrl}/exercise/all?moduleId=${moduleId}`
+    );
+  }
+
+  public createExercise(exercise: Exercise): Observable<any> {
+    let name = exercise.name;
+    let description = exercise.description;
+    let moduleId = exercise.moduleId;
+
+    return this.http.post(
+      `${env.apiHostUrl}/exercise`,
+      {
+        name,
+        description,
+        moduleId
+      }
     );
   }
 
