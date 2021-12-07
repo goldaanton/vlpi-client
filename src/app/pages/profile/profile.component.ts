@@ -17,7 +17,8 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userName = this.loginService.getUser().name;
+    let user = this.loginService.getUser();
+    this.userName = `${user.firstName} ${user.lastName}`;
   }
 
   onEditClick() {

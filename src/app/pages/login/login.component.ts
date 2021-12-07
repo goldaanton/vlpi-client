@@ -12,6 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit, OnDestroy {
 
   private loginSubscription!: Subscription;
+  private getUserSubscription!: Subscription;
 
   public loginData = {
     email: '',
@@ -29,17 +30,27 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.loginSubscription = this.loginService.generateToken(this.loginData).subscribe(
-      (data) => {
-        console.log(data);
+      (authData) => {
+        this.loginService.setToken(authData.accessToken);
 
-        this.loginService.loginUser(data.accessToken);
+        this.getUserSubscription = this.loginService.getCurrentUser().subscribe(
+          (userData) => {
+            this.loginService.setUser(userData);
 
-        this.router.navigate(['']).then(() => {
-          window.location.reload();
-        });
+            this.router.navigate(['']).then(() => {
+              window.location.reload();
+            });
 
-      }, (err) => {
-        console.log(err);
+          }, (userErr) => {
+            console.log(userErr);
+
+            this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+              duration: 3000
+            });
+          }
+        );
+      }, (authErr) => {
+        console.log(authErr);
 
         this.snackBar.open('Your credentials are invalid', '', {
           duration: 3000
@@ -50,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loginSubscription?.unsubscribe();
+    this.getUserSubscription?.unsubscribe();
   }
 
 }

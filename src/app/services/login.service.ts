@@ -50,17 +50,20 @@ export class LoginService {
     )
   }
 
-  public loginUser(token: string): void {
+  public getCurrentUser(): Observable<any> {
+    return this.http.get(`${env.apiHostUrl}/user/current`);
+  }
+
+  public setToken(token: string): void {
+    localStorage.setItem('token', token);
+
     let parsedToken = this.parseToken(token);
     let role = parsedToken.authorities.includes('ROLE_ADMINISTRATOR') ? 'admin' : 'student';
-    let user = JSON.stringify({
-      username: parsedToken.sub,
-      role: role,
-      name: 'Anton Golda'
-    });
+    localStorage.setItem('role', role);
+  }
 
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', user);
+  public setUser(user: User): void {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   public isLoggedIn(): boolean {
@@ -79,7 +82,14 @@ export class LoginService {
   }
 
   public getToken(): string | null {
-    return localStorage.getItem('token');
+    let token = localStorage.getItem('token');
+
+    if (token) {
+      return token;
+    } else {
+      this.logOut();
+      return null;
+    }
   }
 
   public getUser() {
@@ -93,8 +103,15 @@ export class LoginService {
     }
   }
 
-  public getUserRole(): string {
-    return this.getUser().role;
+  public getUserRole(): string | null {
+    let role = localStorage.getItem('role');
+
+    if (role != null) {
+      return role;
+    } else {
+      this.logOut();
+      return null;
+    }
   }
 
   private parseToken(token: string): any {
