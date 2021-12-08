@@ -12,7 +12,8 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
-  signupSubscription: Subscription | undefined;
+  signupSubscription!: Subscription;
+  getUserSubscription!: Subscription;
 
   public user: User = {
     firstName: '',
@@ -33,10 +34,25 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.signupSubscription = this.loginService.register(this.user).subscribe(
-      (data) => {
-        console.log(data);
+      (authData) => {
+        this.loginService.setToken(authData.accessToken);
 
-        this.router.navigate(['login']);
+        this.getUserSubscription = this.loginService.getCurrentUser().subscribe(
+          (userData) => {
+            this.loginService.setUser(userData);
+
+            this.router.navigate(['']).then(() => {
+              window.location.reload();
+            });
+
+          }, (userErr) => {
+            console.log(userErr);
+
+            this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+              duration: 3000
+            });
+          }
+        );
       }, (err) => {
         console.log(err);
 
@@ -48,7 +64,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.signupSubscription?.unsubscribe()
+    this.signupSubscription?.unsubscribe();
+    this.getUserSubscription?.unsubscribe();
   }
 
 }
