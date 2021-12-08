@@ -58,11 +58,23 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDelete(exercise_id: string) {
+  onDelete(exerciseId: string) {
     this.dialogService.openConfirmDialog('Are you sure you want to delete this exercise?')
       .afterClosed().subscribe((response) => {
         if (response) {
-          alert(`Exercise with id ${exercise_id} was deleted`);
+          this.modulesService.deleteExercise(exerciseId).subscribe(
+            (data) => {
+              this.snackBar.open('Exercise was deleted.', '', {
+                duration: 3000
+              });
+              this.fetchExercises();
+            }, (err) => {
+              console.log(err);
+              this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+                duration: 5000
+              });
+            }
+          );
         }
       });
   }

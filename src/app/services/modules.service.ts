@@ -40,6 +40,14 @@ export class ModulesService {
     );
   }
 
+  public deleteExercise(exerciseId: string): Observable<any> {
+    return this.http.delete(`${env.apiHostUrl}/exercise/${exerciseId}`);
+  }
+
+  public getTasks(exerciseId: string): Observable<any> {
+    return this.http.get(`${env.apiHostUrl}/exercise/${exerciseId}`);
+  }
+
   public createTask(task: any): Observable<any> {
     let question = task.question;
     let score = task.score;
@@ -55,10 +63,6 @@ export class ModulesService {
         solutionBlocks
       }
     )
-  }
-
-  public getTasks(exerciseId: string): Observable<any> {
-    return this.http.get(`${env.apiHostUrl}/exercise/${exerciseId}`);
   }
 
 }
