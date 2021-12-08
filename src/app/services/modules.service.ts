@@ -40,84 +40,25 @@ export class ModulesService {
     );
   }
 
-  public getTasks(exerciseId: any): any {
-    return [
+  public createTask(task: any): Observable<any> {
+    let question = task.question;
+    let score = task.score;
+    let exerciseId = task.exerciseId;
+    let solutionBlocks = task.solutionBlocks;
+
+    return this.http.post(
+      `${env.apiHostUrl}/task`,
       {
-        id: 1,
-        question: 'Question 1',
-        score: 5,
-        solution_blocks: [
-          {
-            text: 'abcdefg',
-            display_order: 1,
-            solution_order: 1
-          }
-        ]
-      },
-      {
-        id: 2,
-        question: 'Question 2',
-        score: 5,
-        solution_blocks: [
-          {
-            text: 'abcdefg',
-            display_order: 2,
-            solution_order: 2
-          }
-        ]
-      },
-      {
-        id: 3,
-        question: 'Question 3',
-        score: 5,
-        solution_blocks: [
-          {
-            text: 'abcdefg',
-            display_order: 3,
-            solution_order: 3
-          }
-        ]
-      },
-      {
-        id: 4,
-        question: 'Question 4',
-        score: 5,
-        solution_blocks: [
-          {
-            text: 'abcdefg',
-            display_order: 4,
-            solution_order: 4
-          }
-        ]
-      },
-      {
-        id: 5,
-        question: 'Question 5 Question 5 Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5 Question 5 Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5Question 5',
-        score: 5,
-        solution_blocks: [
-          {
-            text: 'abcdefg',
-            display_order: 5,
-            solution_order: 5
-          },
-          {
-            text: 'abcdefg',
-            display_order: 5,
-            solution_order: 5
-          },
-          {
-            text: 'abcdefg',
-            display_order: 5,
-            solution_order: 5
-          },
-          {
-            text: 'abcdefg',
-            display_order: 5,
-            solution_order: 5
-          }
-        ]
+        question,
+        score,
+        exerciseId,
+        solutionBlocks
       }
-    ]
+    )
+  }
+
+  public getTasks(exerciseId: string): Observable<any> {
+    return this.http.get(`${env.apiHostUrl}/exercise/${exerciseId}`);
   }
 
 }
