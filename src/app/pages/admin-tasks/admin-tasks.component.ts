@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DialogService } from 'src/app/dialog.service';
+import { DialogService } from 'src/app/services/dialog.service';
 import { ModulesService } from 'src/app/services/modules.service';
 
 @Component({

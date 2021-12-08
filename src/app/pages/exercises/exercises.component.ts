@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Exercise } from 'src/app/models';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogService } from 'src/app/dialog.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-exercises',

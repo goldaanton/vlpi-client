@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DialogService } from 'src/app/dialog.service';
+import { DialogService } from 'src/app/services/dialog.service';
 import { ModulesService } from 'src/app/services/modules.service';
 
 @Component({

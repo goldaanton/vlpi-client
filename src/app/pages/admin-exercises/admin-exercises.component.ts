@@ -6,8 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExerciseComponent } from 'src/app/components/exercise/exercise.component';
-import { DialogService } from 'src/app/dialog.service';
 import { Exercise } from 'src/app/models';
+import { DialogService } from 'src/app/services/dialog.service';
 import { ModulesService } from 'src/app/services/modules.service';
 
 @Component({
