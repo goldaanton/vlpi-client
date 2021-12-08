@@ -16,14 +16,9 @@
 
     <div class="col-2">
       <div class="container section no-paddings">
-        <div
-          *ngFor="let task of tasks; let i = index"
-          class="tasks-list"
-        >
+        <div *ngFor="let task of tasks; let i= index" class="tasks-list">
           <p
-            (click)="setTask(task.id)"
-            [ngClass]="{ 'task-active': task.id == activeTaskId }"
-          >
+            [ngClass]="{ 'task-active': task.id == activeTaskId }">
             Task {{ i + 1 }}
           </p>
         </div>
@@ -31,10 +26,10 @@
     </div>
 
     <div class="col-10">
-      <div class="container-fluid section no-paddings pt-3 pb-3">
+      <div class="container-fluid section no-paddings pt-3 pb-3 d-flex flex-column justify-content-between">
 
         <div class="container-fluid">
-          <h1 class="section-header" >Task Definition</h1>
+          <h1 class="section-header">Task Definition</h1>
           <p class="task-question section">{{ task.question }}</p>
         </div>
 
@@ -63,16 +58,36 @@
               [cdkDropListConnectedTo]="[answerBlocksList]"
               class="blocks-list"
               (cdkDropListDropped)="drop($event)">
-              <div class="blocks-box" *ngFor="let block of userAnswerBlocks" cdkDrag>{{ block }}</div>
+              <div class="blocks-box" *ngFor="let block of userAnswerBlocks"
+                cdkDrag>{{ block }}
+              </div>
+            </div>
+          </div>
+
+          <div class="blocks-container" *ngIf="false">
+            <h2>Correct Answer</h2>
+
+            <div
+              cdkDropList
+              class="blocks-list"
+              [cdkDropListData]="correctBlocks"
+            >
+              <div class="blocks-box" *ngFor="let block of correctBlocks" cdkDrag>
+                {{ block }}
+              </div>
             </div>
           </div>
         </div>
 
         <div class="container-fluid">
-          <button mat-flat-button class="button-primary" (click)="checkAnswer(userAnswerList.data)">Submit</button>
+          <button mat-flat-button class="button-primary" (click)="checkAnswer(userAnswerList.data)" *ngIf="!isTaskAnswered()">Submit</button>
+          <button mat-flat-button class="button-primary" (click)="onNextTask()" *ngIf="!isLastTask && isTaskAnswered()">Next Task</button>
+          <button mat-flat-button class="button-primary" (click)="onFinishExercise()" *ngIf="isLastTask">Finish Exercise</button>
+          <button mat-flat-button class="button-secondary" (click)="onNextTask()" *ngIf="!isLastTask && !isTaskAnswered()">Skip Task</button>
+          <button mat-flat-button class="button-secondary" (click)="onShowAnswer()" *ngIf="isTaskAnswered()">Show Answer</button>
         </div>
 
-        </div>
       </div>
+    </div>
   </div>
 </div>
