@@ -10,14 +10,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required)
   })
-
-  private modulesSubscription!: Subscription;
 
   constructor(
     private modulesService: ModulesService,
@@ -31,7 +29,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.form.valid) {
-      this.modulesSubscription = this.modulesService.createExercise(
+      this.modulesService.createExercise(
         {
           name: this.form.value.name,
           description: this.form.value.description,
@@ -61,10 +59,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   onClose() {
     this.form.reset();
     this.dialogRef.close();
-  }
-
-  ngOnDestroy(): void {
-    this.modulesSubscription?.unsubscribe();
   }
 
 }

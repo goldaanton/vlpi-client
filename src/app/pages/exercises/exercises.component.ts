@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { ModulesService } from 'src/app/services/modules.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exercise } from 'src/app/models';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogService } from 'src/app/dialog.service';
 
 @Component({
   selector: 'app-exercises',
@@ -26,7 +27,9 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private modulesService: ModulesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +48,27 @@ export class ExercisesComponent implements OnInit, OnDestroy {
         }
       );
     });
+  }
+
+  public onExerciseChoose(exercise: any) {
+    this.dialogService.openConfirmDialog(`Do you want to start exercise "${exercise.name}"?`)
+      .afterClosed().subscribe((response) => {
+        if (response) {
+          this.modulesService.startExercise(exercise.id).subscribe(
+            (data) => {
+              this.router.navigate(['exercises', exercise.id], {
+                relativeTo: this.route,
+                queryParams: { exerciseAnswerId: data.id }
+              });
+            }, (err) => {
+              console.log(err);
+              this.snackBar.open('Something went wrong. Look in the console for details.', '', {
+                duration: 5000
+              });
+            }
+          );
+        }
+      });
   }
 
   ngOnDestroy(): void {

@@ -13,6 +13,7 @@ import { ModulesService } from 'src/app/services/modules.service';
 export class TasksComponent implements OnInit, OnDestroy {
 
   public exerciseId!: string;
+  public exerciseAnswerId!: string;
 
   public tasks!: any[];
   public task!: any;
@@ -44,6 +45,11 @@ export class TasksComponent implements OnInit, OnDestroy {
         }
       );
     });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+        this.exerciseAnswerId = params.exerciseAnswerId;
+      }
+    );
   }
 
   public drop(event: CdkDragDrop<string[]>) {
@@ -67,7 +73,30 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   public checkAnswer(answerBlocks: string[]) {
-    alert(answerBlocks.join(' '));
+    let solutionBlockIds = answerBlocks.map((text) => {
+      return this.task.solutionBlocks.find((block: { text: string }) => block.text == text ).id
+    });
+
+    this.modulesService.answerTask(
+      {
+        taskId: this.activeTaskId,
+        exerciseAnswerId: this.exerciseAnswerId,
+        solutionBlockIds: solutionBlockIds
+      }
+    ).subscribe(
+      (data) => {
+        if (data.score == 0) {
+          this.snackBar.open('Your answer is incorrect :(', '', { duration: 3000 });
+        } else {
+          this.snackBar.open('Your answer is correct!', '', { duration: 3000 });
+        }
+      }, (err) => {
+        console.log(err);
+        this.snackBar.open('Something went wrong. Look in the console for details.', '' , {
+          duration: 3000
+        });
+      }
+    );
   }
 
   ngOnDestroy(): void {

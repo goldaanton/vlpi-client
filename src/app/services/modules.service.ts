@@ -62,7 +62,24 @@ export class ModulesService {
         exerciseId,
         solutionBlocks
       }
-    )
+    );
+  }
+
+  public startExercise(exerciseId: string): Observable<any> {
+    return this.http.post(`${env.apiHostUrl}/exercise-answer`, {
+      exerciseId
+    });
+  }
+
+  public answerTask(answerParams: any): Observable<any> {
+    return this.http.post(
+      `${env.apiHostUrl}/task-answer`,
+      {
+        taskId: answerParams.taskId,
+        exerciseAnswerId: answerParams.exerciseAnswerId,
+        solutionBlockIds: answerParams.solutionBlockIds
+      }
+    );
   }
 
 }
