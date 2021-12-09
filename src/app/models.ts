@@ -11,3 +11,9 @@ export interface Exercise {
   description: string;
   moduleId: number;
 }
+
+export interface SolutionBlock {
+  id: number;
+  text: string;
+  solutionOrder: number;
+}

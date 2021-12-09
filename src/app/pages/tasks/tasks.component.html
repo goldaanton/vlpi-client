@@ -2,7 +2,7 @@
 
   <div class="row align-items-center">
     <div class="col-1 align-right">
-      <a mat-icon-button [routerLink]="'../../'">
+      <a mat-icon-button (click)="onFinishExercise()">
         <mat-icon class="back-icon">arrow_back</mat-icon>
       </a>
     </div>
@@ -64,7 +64,7 @@
             </div>
           </div>
 
-          <div class="blocks-container" *ngIf="false">
+          <div class="blocks-container" *ngIf="isShowSolutionPressed">
             <h2>Correct Answer</h2>
 
             <div
@@ -80,11 +80,11 @@
         </div>
 
         <div class="container-fluid">
-          <button mat-flat-button class="button-primary" (click)="checkAnswer(userAnswerList.data)" *ngIf="!isTaskAnswered()">Submit</button>
-          <button mat-flat-button class="button-primary" (click)="onNextTask()" *ngIf="!isLastTask && isTaskAnswered()">Next Task</button>
+          <button mat-flat-button class="button-primary" (click)="checkAnswer(userAnswerList.data)" *ngIf="!isTaskAnswered">Submit</button>
+          <button mat-flat-button class="button-primary" (click)="onNextTask()" *ngIf="!isLastTask && isTaskAnswered">Next Task</button>
           <button mat-flat-button class="button-primary" (click)="onFinishExercise()" *ngIf="isLastTask">Finish Exercise</button>
-          <button mat-flat-button class="button-secondary" (click)="onNextTask()" *ngIf="!isLastTask && !isTaskAnswered()">Skip Task</button>
-          <button mat-flat-button class="button-secondary" (click)="onShowAnswer()" *ngIf="isTaskAnswered()">Show Answer</button>
+          <button mat-flat-button class="button-secondary" (click)="onNextTask()" *ngIf="!isLastTask && !isTaskAnswered">Skip Task</button>
+          <button mat-flat-button class="button-secondary" (click)="onShowAnswer()" *ngIf="isTaskAnswered && !isAnswerCorrect">Show Answer</button>
         </div>
 
       </div>
