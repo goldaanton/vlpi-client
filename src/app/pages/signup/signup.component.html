@@ -15,6 +15,7 @@
 
       <form
         (ngSubmit)="f.form.valid && onSubmit()"
+        [formGroup]="user"
         novalidate
         #f="ngForm"
       >
@@ -29,15 +30,13 @@
                 <mat-label>First Name</mat-label>
                 <input
                   required
-                  name="firstName"
                   matInput
                   placeholder="First Name"
-                  [(ngModel)]="user.firstName"
-                  #firstName="ngModel"
+                  formControlName="firstName"
                 />
                 <mat-hint
-                  *ngIf="f.submitted && firstName.errors && firstName.errors.required"
                   class="text-danger"
+                  *ngIf="f.submitted && firstName?.invalid"
                 >
                   First Name is required
                 </mat-hint>
@@ -49,14 +48,12 @@
                 <mat-label>Last name</mat-label>
                 <input
                   required
-                  name="lastName"
                   matInput
                   placeholder="Last Name"
-                  [(ngModel)]="user.lastName"
-                  #lastName="ngModel"
+                  formControlName="lastName"
                 />
                 <mat-hint
-                  *ngIf="f.submitted && lastName.errors && lastName.errors.required"
+                  *ngIf="f.submitted && lastName?.invalid"
                   class="text-danger"
                 >
                   Last Name is required
@@ -72,24 +69,25 @@
               email
               required
               type="email"
-              name="email"
               matInput
               placeholder="Email"
-              [(ngModel)]="user.email"
-              #email="ngModel"
+              formControlName="email"
             />
+
             <mat-hint
-              *ngIf="f.submitted && email.errors && email.errors.required"
+              *ngIf="f.submitted && email?.errors?.required"
               class="text-danger"
             >
               Email is required
             </mat-hint>
+
             <mat-hint
-              *ngIf="f.submitted && email.errors && email.errors.email"
+              *ngIf="f.submitted && email?.errors?.email"
               class="text-danger"
             >
               Email must be a valid email address
             </mat-hint>
+
           </mat-form-field>
 
           <mat-form-field class="full-width" appearance="outline">
@@ -97,14 +95,12 @@
             <input
               required
               type="password"
-              name="password"
               matInput
               placeholder="Password"
-              [(ngModel)]="user.password"
-              #password="ngModel"
+              formControlName="password"
             />
             <mat-hint
-              *ngIf="f.submitted && password.errors && password.errors.required"
+              *ngIf="f.submitted && password?.invalid"
               class="text-danger"
             >
               Password is required
@@ -116,24 +112,25 @@
             <input
               required
               type="password"
-              name="passwordConfirmation"
               matInput
               placeholder="Password Confirmation"
-              [(ngModel)]="user.passwordConfirmation"
-              #passwordConfirmation="ngModel"
+              formControlName="passwordConfirmation"
             />
+
             <mat-hint
-              *ngIf="f.submitted && passwordConfirmation.errors && passwordConfirmation.errors.required"
+              *ngIf="f.submitted && passwordConfirmation?.errors?.required"
               class="text-danger"
             >
-              Confirm your password
+              Password Confirmation is required
             </mat-hint>
+
             <mat-hint
-              *ngIf="f.submitted && password != passwordConfirmation"
+              *ngIf="f.submitted && f.hasError('notSame')"
               class="text-danger"
             >
               Passwords do not match
             </mat-hint>
+
           </mat-form-field>
 
         </div>

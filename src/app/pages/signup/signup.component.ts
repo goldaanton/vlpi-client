@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/models';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -15,13 +15,19 @@ export class SignupComponent implements OnInit, OnDestroy {
   signupSubscription!: Subscription;
   getUserSubscription!: Subscription;
 
-  public user: User = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    passwordConfirmation: ''
+  checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('passwordConfirmation')?.value;
+    return pass === confirmPass ? null : { notSame: true };
   }
+
+  public user: FormGroup = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    passwordConfirmation: new FormControl('', Validators.required)
+  }, { validators: this.checkPasswords });
 
   constructor(
     private snackBar: MatSnackBar,
@@ -33,7 +39,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.signupSubscription = this.loginService.register(this.user).subscribe(
+    this.signupSubscription = this.loginService.register(this.user.value).subscribe(
       (authData) => {
         this.loginService.setToken(authData.accessToken);
 
@@ -67,5 +73,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.signupSubscription?.unsubscribe();
     this.getUserSubscription?.unsubscribe();
   }
+
+  get firstName() { return this.user.get('firstName'); }
+  get lastName() { return this.user.get('lastName'); }
+  get email() { return this.user.get('email'); }
+  get password() { return this.user.get('password'); }
+  get passwordConfirmation() { return this.user.get('passwordConfirmation'); }
 
 }
