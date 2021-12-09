@@ -2,7 +2,7 @@
 
   <div class="row align-items-center">
     <div class="col-1 align-right">
-      <a mat-icon-button [routerLink]="'../../'">
+      <a mat-icon-button (click)="onArrowBack()">
         <mat-icon class="back-icon">arrow_back</mat-icon>
       </a>
     </div>
@@ -13,7 +13,7 @@
   </div>
 
   <div class="row mt-3">
-    <div class="col-2">
+    <div class="col-2" *ngIf="isNewExercise">
       <div class="container no-paddings" style="margin-left: 27px;">
         <button
           mat-flat-button
@@ -42,7 +42,7 @@
               </p>
             </div>
 
-            <div class="icon-delete">
+            <div class="icon-delete" *ngIf="isNewExercise">
               <button mat-icon-button (click)="onDelete(task.id)">
                 <mat-icon>delete_outline</mat-icon>
               </button>
@@ -59,12 +59,23 @@
         <div class="container-fluid">
           <h1 class="section-header" >Task Definition</h1>
           <mat-form-field appearance="outline" class="full-width">
-            <textarea rows="3" matInput placeholder="Task definition" [(ngModel)]="question"></textarea>
+            <textarea
+              rows="3"
+              matInput
+              placeholder="Task definition"
+              [(ngModel)]="question"
+              [disabled]="!isNewExercise"
+            ></textarea>
           </mat-form-field>
 
           <h1 class="section-header" >Points</h1>
           <mat-form-field appearance="outline">
-            <input type="number" matInput [(ngModel)]="points">
+            <input
+              type="number"
+              matInput
+              [(ngModel)]="points"
+              [disabled]="!isNewExercise"
+            >
           </mat-form-field>
         </div>
 
@@ -101,13 +112,18 @@
         <form
           [formGroup]="newBlockForm"
           (submit)="addNewBlock()"
+          *ngIf="isNewExercise"
         >
           <div class="container-fluid">
 
             <div class="row">
               <div class="col">
                 <mat-form-field appearance="outline" class="new-block-input">
-                  <input matInput placeholder="Text" formControlName="text">
+                  <input
+                    matInput
+                    placeholder="Text"
+                    formControlName="text"
+                  >
                 </mat-form-field>
               </div>
             </div>
@@ -127,13 +143,13 @@
           </div>
         </form>
 
-        <div class="container-fluid align-center mt-5">
+        <div class="container-fluid align-center mt-5" *ngIf="isNewExercise">
           <button
             mat-flat-button
             class="button-primary"
             (click)="createTask(answerBlocksList.data, correctAnswerList.data)"
           >
-            Create task
+            Save task
           </button>
         </div>
 

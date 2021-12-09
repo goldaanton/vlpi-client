@@ -56,6 +56,10 @@ export class ModulesService {
     );
   }
 
+  public deleteTask(taskId: number): Observable<any> {
+    return this.http.delete(`${env.apiHostUrl}/task/${taskId}`);
+  }
+
   public startExercise(exerciseId: string): Observable<any> {
     return this.http.post(
       `${env.apiHostUrl}/exercise-answer`,

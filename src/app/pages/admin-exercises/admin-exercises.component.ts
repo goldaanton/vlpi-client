@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExerciseComponent } from 'src/app/components/exercise/exercise.component';
 import { Exercise } from 'src/app/models';
@@ -30,6 +30,7 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private modulesService: ModulesService,
     private dialogService: DialogService,
     private snackService: SnackBarService,
@@ -50,10 +51,18 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
       data: { moduleId: this.moduleId }
     });
 
-    this.modalSubscription = dialogRef.afterClosed()
+    this.modalSubscription = dialogRef
+      .afterClosed()
       .subscribe(
-        (data) => {
-          this.fetchExercises();
+        (response) => {
+          if (response) {
+            this.router.navigate(['admin-exercises', response], {
+              relativeTo: this.route,
+              queryParams: {
+                new: true
+              }
+            });
+          }
         }
       );
   }

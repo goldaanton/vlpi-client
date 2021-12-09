@@ -1,9 +1,8 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModulesService } from 'src/app/services/modules.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-exercise',
@@ -12,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class ExerciseComponent implements OnInit {
 
-  form: FormGroup = new FormGroup({
+  public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required)
   })
@@ -20,14 +19,14 @@ export class ExerciseComponent implements OnInit {
   constructor(
     private modulesService: ModulesService,
     private dialogRef: MatDialogRef<ExerciseComponent>,
-    private snackBar: MatSnackBar,
+    private snackService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  public onSubmit() {
     if (this.form.valid) {
       this.modulesService.createExercise(
         {
@@ -37,18 +36,12 @@ export class ExerciseComponent implements OnInit {
         }
       ).subscribe(
         (data) => {
-          this.snackBar.open('Exercise was created successfully!', '', {
-            duration: 3000
-          });
+          this.dialogRef.close(data.id);
         }, (err) => {
-          console.log(err);
-          this.snackBar.open('Something went wrong. Look in the console for details.', '', {
-            duration: 5000
-          });
+          this.snackService.showError(err);
+          this.dialogRef.close(false);
         }
       );
-
-      this.onClose();
     }
   }
 
@@ -57,8 +50,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   onClose() {
-    this.form.reset();
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
 }

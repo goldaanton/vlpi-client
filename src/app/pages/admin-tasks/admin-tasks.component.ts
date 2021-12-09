@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SolutionBlock } from 'src/app/models';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -16,11 +16,12 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 export class AdminTasksComponent implements OnInit, OnDestroy {
 
   public exerciseId!: string;
+  public isNewExercise: boolean = false;
 
-  public tasks!: any[];
+  public tasks: any[] = [];
 
   public activeTask!: any;
-  public activeTaskId!: string;
+  public activeTaskId!: number;
 
   public answerBlocks: string[] = [];
   public correctAnswerBlocks: string[] = [];
@@ -38,17 +39,24 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
     private modulesService: ModulesService,
     private dialogService: DialogService,
     private activatedRoute: ActivatedRoute,
-    private snackService: SnackBarService
+    private snackService: SnackBarService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      if (params.get('new')) {
+        this.isNewExercise = true;
+      }
+    });
+
     this.activatedRoute.paramMap.subscribe((params) => {
       this.exerciseId = params.get('id') || '1';
       this.fetchTasks(0);
     });
   }
 
-  public setTask(taskId: string) {
+  public setTask(taskId: number) {
     this.activeTask = this.tasks.find(task => task.id == taskId);
     this.activeTaskId = this.activeTask.id;
     this.answerBlocks = this.activeTask.solutionBlocks
@@ -58,7 +66,7 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
 
   // * NOTE: creating task only on front end to fill data
   public onCreate() {
-    let index = (Math.max.apply(null, this.tasks.map((task) => parseInt(task.id))) + 1).toString();
+    let index = (Math.max.apply(null, this.tasks.map((task) => parseInt(task.id))) + 1);
     this.tasks.push({
       id: index,
       question: '',
@@ -70,6 +78,9 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
 
   // * NOTE: actual crating task in databse
   public createTask(answerBlocksList: string[], correctAnswerList: string[]) {
+    this.question = "";
+    this.points = 100;
+
     let solutionBlocks: any[] = [];
 
     answerBlocksList.forEach((text: string) => {
@@ -114,6 +125,31 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
       this.answerBlocks.push(this.newBlockForm.value.text);
       this.newBlockForm.reset();
     }
+  }
+
+  public onArrowBack() {
+    if (!this.isNewExercise) {
+      this.router.navigate(['../../'], {
+        relativeTo: this.activatedRoute
+      });
+
+      return;
+    }
+
+    this.dialogService
+      .openConfirmDialog(
+        'Do you want to finish creating tasks? You will no be able to update this exercise later!'
+      ).afterClosed()
+      .subscribe(
+        (response) => {
+          if (response) {
+            this.router.navigate(['../../'], {
+              relativeTo: this.activatedRoute
+            });
+            this.snackService.showMessage('Exercise was created!');
+          }
+        }
+      );
   }
 
   public drop(event: CdkDragDrop<string[]>) {
