@@ -62,6 +62,23 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
     this.answerBlocks = this.activeTask.solutionBlocks
       .map((block: SolutionBlock) => block.text );
     this.correctAnswerBlocks = [];
+    this.question = this.activeTask.question;
+    this.points = this.activeTask.score;
+
+    this.modulesService.getTaskSolution(taskId.toString())
+      .subscribe(
+        (data) => {
+          data.map((block: SolutionBlock) => {
+            let index = this.answerBlocks.indexOf(block.text);
+            if (index > -1) {
+              this.answerBlocks.splice(index, 1);
+              this.correctAnswerBlocks.push(block.text);
+            }
+          });
+        }, (err) => {
+          this.snackService.showError(err);
+        }
+      );
   }
 
   // * NOTE: creating task only on front end to fill data
@@ -78,9 +95,6 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
 
   // * NOTE: actual crating task in databse
   public createTask(answerBlocksList: string[], correctAnswerList: string[]) {
-    this.question = "";
-    this.points = 100;
-
     let solutionBlocks: any[] = [];
 
     answerBlocksList.forEach((text: string) => {
@@ -111,11 +125,18 @@ export class AdminTasksComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onDelete(exercise_id: string) {
+  public onDelete(taskId: number) {
     this.dialogService.openConfirmDialog('Are you sure you want to delete this task?')
       .afterClosed().subscribe((response) => {
         if (response) {
-          alert(`Exercise with id ${exercise_id} was deleted`);
+          this.modulesService.deleteTask(taskId).subscribe(
+            (data) => {
+              this.snackService.showMessage('Task was deleted successfully.');
+              this.fetchTasks(this.tasks.length - 2);
+            }, (err) => {
+              this.snackService.showError(err);
+            }
+          )
         }
       });
   }
