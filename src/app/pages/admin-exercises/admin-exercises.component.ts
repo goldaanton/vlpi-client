@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,6 +8,7 @@ import { ExerciseComponent } from 'src/app/components/exercise/exercise.componen
 import { Exercise } from 'src/app/models';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ModulesService } from 'src/app/services/modules.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-admin-exercises',
@@ -18,8 +18,9 @@ import { ModulesService } from 'src/app/services/modules.service';
 export class AdminExercisesComponent implements OnInit, OnDestroy {
 
   public moduleId!: string;
-  public exercises!: any;
-  public dataSource!: MatTableDataSource<Exercise>;
+
+  public dataSource: MatTableDataSource<Exercise> = new MatTableDataSource<Exercise>();
+
   public displayedColumns: string[] = ['name', 'delete'];
 
   private modulesSubscription!: Subscription;
@@ -30,9 +31,9 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private modulesService: ModulesService,
-    private dialog: MatDialog,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
+    private snackService: SnackBarService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -42,37 +43,32 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCreate() {
+  public onCreate() {
     let dialogRef = this.dialog.open(ExerciseComponent, {
       autoFocus: true,
       disableClose: true,
-      data: {
-        moduleId: this.moduleId
-      }
+      data: { moduleId: this.moduleId }
     });
 
-    this.modalSubscription = dialogRef.afterClosed().subscribe(
-      (data) => {
-        this.fetchExercises();
-      }
-    );
+    this.modalSubscription = dialogRef.afterClosed()
+      .subscribe(
+        (data) => {
+          this.fetchExercises();
+        }
+      );
   }
 
-  onDelete(exerciseId: string) {
+  public onDelete(exerciseId: string) {
     this.dialogService.openConfirmDialog('Are you sure you want to delete this exercise?')
-      .afterClosed().subscribe((response) => {
+      .afterClosed()
+      .subscribe((response) => {
         if (response) {
           this.modulesService.deleteExercise(exerciseId).subscribe(
             (data) => {
-              this.snackBar.open('Exercise was deleted.', '', {
-                duration: 3000
-              });
+              this.snackService.showMessage('Exercise was deleted.');
               this.fetchExercises();
             }, (err) => {
-              console.log(err);
-              this.snackBar.open('Something went wrong. Look in the console for details.', '', {
-                duration: 5000
-              });
+              this.snackService.showError(err);
             }
           );
         }
@@ -85,18 +81,16 @@ export class AdminExercisesComponent implements OnInit, OnDestroy {
   }
 
   private fetchExercises() {
-    this.modulesSubscription = this.modulesService.getExercises(this.moduleId).subscribe(
-      (data) => {
-        this.exercises = data;
-        this.dataSource = new MatTableDataSource<Exercise>(this.exercises);
-        this.dataSource.paginator = this.paginator;
-      }, (err) => {
-        console.log(err);
-        this.snackBar.open('Something went wrong. Look in the console for details.', '', {
-          duration: 5000
-        });
-      }
-    );
+    this.modulesSubscription = this.modulesService
+      .getExercises(this.moduleId)
+      .subscribe(
+        (data) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+        }, (err) => {
+          this.snackService.showError(err);
+        }
+      );
   }
 
 }
