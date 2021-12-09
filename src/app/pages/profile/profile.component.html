@@ -35,46 +35,54 @@
       <div class="container-fluid mt-4">
 
         <div class="row">
-          <div class="col-10 headers-col">
+          <div class="col-9 headers-col">
             <p>
-              Exercises passed
+              Exercises Completed
             </p>
           </div>
-          <div class="col-2 stats-col">
-            <p>5</p>
+          <div class="col-3 stats-col">
+            <p>
+              {{ statistics.exerciseAnswersCount }}
+            </p>
           </div>
         </div>
 
         <div class="row mt-2">
-          <div class="col-10 headers-col">
+          <div class="col-9 headers-col">
             <p>
-              Exercises attempts
+              Tasks Completed
             </p>
           </div>
-          <div class="col-2 stats-col">
-            <p>12</p>
+          <div class="col-3 stats-col">
+            <p>
+              {{ statistics.taskAnswersCount }}
+            </p>
           </div>
         </div>
 
         <div class="row mt-2">
-          <div class="col-10 headers-col">
+          <div class="col-9 headers-col">
             <p>
-              Tasks passed
+              Tasks Grade
             </p>
           </div>
-          <div class="col-2 stats-col">
-            <p>0</p>
+          <div class="col-3 stats-col">
+            <p>
+              {{ statistics.solutionsToTaskAnswersRatio * 100 }}%
+            </p>
           </div>
         </div>
 
         <div class="row mt-2">
-          <div class="col-10 headers-col">
+          <div class="col-9 headers-col">
             <p>
-              Correct answers
+              Total Score
             </p>
           </div>
-          <div class="col-2 stats-col">
-            <p>23</p>
+          <div class="col-3 stats-col">
+            <p>
+              {{ statistics.taskAnswersTotalScore }}
+            </p>
           </div>
         </div>
 

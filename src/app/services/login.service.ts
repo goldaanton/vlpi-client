@@ -54,6 +54,10 @@ export class LoginService {
     return this.http.get(`${env.apiHostUrl}/user/current`);
   }
 
+  public getUserStatistics(): Observable<any> {
+    return this.http.get(`${env.apiHostUrl}/user-statistics/current`);
+  }
+
   public setToken(token: string): void {
     localStorage.setItem('token', token);
 
