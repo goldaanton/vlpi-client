@@ -34,3 +34,12 @@
 .table {
   min-width: 100%;
 }
+
+.table-footer {
+  text-align: center;
+
+  td {
+    font-size: 24px;
+    color: var(--primary-green);
+  }
+}
