@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public userName!: string;
   public statistics!: any;
+  public ratio!: number;
 
   private statisticsSubscription!: Subscription;
 
@@ -27,8 +28,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.statisticsSubscription = this.loginService.getUserStatistics()
       .subscribe(
         (data) => {
-          console.log(data);
           this.statistics = data;
+          this.ratio = Math.round(data.solutionsToTaskAnswersRatio * 100);
         }, (err) => {
           this.snackService.showError(err);
         }
